@@ -26,8 +26,12 @@
 
 
 pub fn digit_sum(digits: &str) -> u32 {
-    unimplemented!()
+    digits.chars().zip(digits.chars().cycle().skip(1))
+        .filter(|&(left, right)| left == right)
+        .map(|(left, _)| left.to_digit(10).unwrap())
+        .sum()
 }
+
 
 #[cfg(test)]
 mod tests {
