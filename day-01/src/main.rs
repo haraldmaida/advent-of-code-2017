@@ -36,6 +36,8 @@ const PUZZLE_INPUT: &str = "\
 /// solve the puzzle with my input
 fn main() {
 
-    println!("Answer: {}", digit_sum(PUZZLE_INPUT))
+    println!("Answer part 1: {}", digit_sum(PUZZLE_INPUT, 1));
+
+    println!("Answer part 2: {}", digit_sum(PUZZLE_INPUT, PUZZLE_INPUT.len() / 2));
 
 }

@@ -23,10 +23,28 @@
 //!   the last digit, 9.
 //!
 //! What is the solution to your captcha?
+//!
+//! **Part Two**
+//!
+//! Now, instead of considering the next digit, it wants you to consider the
+//! digit halfway around the circular list. That is, if your list contains 10
+//! items, only include a digit in your sum if the digit 10/2 = 5 steps forward
+//! matches it. Fortunately, your list has an even number of elements.
+//!
+//! For example:
+//!
+//! * 1212 produces 6: the list contains 4 items, and all four digits match the
+//!   digit 2 items ahead.
+//! * 1221 produces 0, because every comparison is between a 1 and a 2.
+//! * 123425 produces 4, because both 2s match each other, but no other digit
+//!   has a match.
+//! * 123123 produces 12.
+//! * 12131415 produces 4.
+//!
+//! What is the solution to your new captcha?
 
-
-pub fn digit_sum(digits: &str) -> u32 {
-    digits.chars().zip(digits.chars().cycle().skip(1))
+pub fn digit_sum(digits: &str, steps: usize) -> u32 {
+    digits.chars().zip(digits.chars().cycle().skip(steps))
         .filter(|&(left, right)| left == right)
         .map(|(left, _)| left.to_digit(10).unwrap())
         .sum()
@@ -39,21 +57,51 @@ mod tests {
 
     #[test]
     fn digits_1122() {
-        assert_eq!(digit_sum("1122"), 3);
+        assert_eq!(digit_sum("1122", 1), 3);
     }
 
     #[test]
     fn digits_1111() {
-        assert_eq!(digit_sum("1111"), 4);
+        assert_eq!(digit_sum("1111", 1), 4);
     }
 
     #[test]
     fn digits_1234() {
-        assert_eq!(digit_sum("1234"), 0);
+        assert_eq!(digit_sum("1234", 1), 0);
     }
 
     #[test]
     fn digits_91212129() {
-        assert_eq!(digit_sum("91212129"), 9);
+        assert_eq!(digit_sum("91212129", 1), 9);
+    }
+
+    #[test]
+    fn digits_1212() {
+        let digits = "1212";
+        assert_eq!(digit_sum(digits, digits.len() / 2), 6);
+    }
+
+    #[test]
+    fn digits_1221() {
+        let digits = "1221";
+        assert_eq!(digit_sum(digits, digits.len() / 2), 0);
+    }
+
+    #[test]
+    fn digits_123425() {
+        let digits = "123425";
+        assert_eq!(digit_sum(digits, digits.len() / 2), 4);
+    }
+
+    #[test]
+    fn digits_123123() {
+        let digits = "123123";
+        assert_eq!(digit_sum(digits, digits.len() / 2), 12);
+    }
+
+    #[test]
+    fn digits_12131415() {
+        let digits = "12131415";
+        assert_eq!(digit_sum(digits, digits.len() / 2), 4);
     }
 }
