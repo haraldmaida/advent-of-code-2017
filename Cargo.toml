@@ -1,6 +1,18 @@
 [package]
 name = "advent-of-code-2017"
 version = "0.1.0"
-authors = ["Harald Maida <harald.maida@innoave.com>"]
+authors = ["haraldmaida"]
+license = "MIT"
+
+description = """Solving Advent of Code Puzzles for 2017"""
+
+readme = "README.md"
+repository = "https://github.com/haraldmaida/advent-of-code-2017"
+keywords = ["advent", "puzzle"]
+
+[lib]
+bench = false
 
 [dependencies]
+aoc-runner = "0.1"
+aoc-runner-derive = "0.1"

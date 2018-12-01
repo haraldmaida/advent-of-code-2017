@@ -1,4 +1,6 @@
-//! ## Day 1: Inverse Captcha
+//! # Day 1: Inverse Captcha
+//!
+//! ## Part 1
 //!
 //! You're standing in a room with "digitization quarantine" written in LEDs
 //! along one wall. The only door is locked, but it includes a small interface.
@@ -24,7 +26,7 @@
 //!
 //! What is the solution to your captcha?
 //!
-//! **Part Two**
+//! ## Part 2
 //!
 //! Now, instead of considering the next digit, it wants you to consider the
 //! digit halfway around the circular list. That is, if your list contains 10
@@ -42,67 +44,32 @@
 //! * 12131415 produces 4.
 //!
 //! What is the solution to your new captcha?
+//!
+//! [Advent of Code 2017 - Day 1](https://adventofcode.com/2017/day/1)
 
+#[aoc_generator(day1)]
+pub fn parse(input: &str) -> String {
+    input.trim().to_string()
+}
+
+#[aoc(day1, part1)]
+pub fn part1(input: &str) -> u32 {
+    digit_sum(input, 1)
+}
+
+#[aoc(day1, part2)]
+pub fn part2(input: &str) -> u32 {
+    digit_sum(input, input.len() / 2)
+}
 
 pub fn digit_sum(digits: &str, steps: usize) -> u32 {
-    digits.chars().zip(digits.chars().cycle().skip(steps))
+    digits
+        .chars()
+        .zip(digits.chars().cycle().skip(steps))
         .filter(|&(left, right)| left == right)
         .map(|(left, _)| left.to_digit(10).unwrap())
         .sum()
 }
 
-
 #[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn digits_1122() {
-        assert_eq!(digit_sum("1122", 1), 3);
-    }
-
-    #[test]
-    fn digits_1111() {
-        assert_eq!(digit_sum("1111", 1), 4);
-    }
-
-    #[test]
-    fn digits_1234() {
-        assert_eq!(digit_sum("1234", 1), 0);
-    }
-
-    #[test]
-    fn digits_91212129() {
-        assert_eq!(digit_sum("91212129", 1), 9);
-    }
-
-    #[test]
-    fn digits_1212() {
-        let digits = "1212";
-        assert_eq!(digit_sum(digits, digits.len() / 2), 6);
-    }
-
-    #[test]
-    fn digits_1221() {
-        let digits = "1221";
-        assert_eq!(digit_sum(digits, digits.len() / 2), 0);
-    }
-
-    #[test]
-    fn digits_123425() {
-        let digits = "123425";
-        assert_eq!(digit_sum(digits, digits.len() / 2), 4);
-    }
-
-    #[test]
-    fn digits_123123() {
-        let digits = "123123";
-        assert_eq!(digit_sum(digits, digits.len() / 2), 12);
-    }
-
-    #[test]
-    fn digits_12131415() {
-        let digits = "12131415";
-        assert_eq!(digit_sum(digits, digits.len() / 2), 4);
-    }
-}
+mod tests;
