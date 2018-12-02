@@ -84,7 +84,7 @@ pub fn parse(input: &str) -> Spreadsheet {
     Spreadsheet {
         cells: input
             .trim()
-            .split("\n")
+            .lines()
             .map(|line| {
                 line.split("\t")
                     .map(|c| c.trim().parse().unwrap())
